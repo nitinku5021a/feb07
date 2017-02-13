@@ -12,49 +12,29 @@ export class ChartviewComponent implements OnInit, OnChanges {
 
   @ViewChild('chart') private chartContainer: ElementRef;
   @Input() private data: Table[];
+  private element = this.chartContainer.nativeElement;
   private margin: any = { top: 20, bottom: 20, left: 100, right: 20};
-  private chart: any;
-  private width: number;
-  private height: number;
+  
+  private width: number = this.element.offsetWidth - this.margin.left - this.margin.right;
+  private height: number = this.element.offsetHeight - this.margin.top - this.margin.bottom;
   private xScale: any;
   private yScale: any;
   private colors: any;
   private xAxis: any;
   private yAxis: any;
 
-  constructor() { }
+  svg = d3.select(this.element).append('svg')
+      .attr('width', this.element.offsetWidth)
+      .attr('height', this.element.offsetHeight);
 
-  ngOnInit() {
-    this.createChart();
-    if (this.data) {
-      this.updateChart();
-    
-    }
-  }
-
-  ngOnChanges() {
-    if (this.data) {
-      
-      this.updateChart();
-   
-    }
-  }
-
-  createChart() {
-    let element = this.chartContainer.nativeElement;
-    this.width = element.offsetWidth - this.margin.left - this.margin.right;
-    this.height = element.offsetHeight - this.margin.top - this.margin.bottom;
-    let svg = d3.select(element).append('svg')
-      .attr('width', element.offsetWidth)
-      .attr('height', element.offsetHeight);
-
-    // chart plot area
-    this.chart = svg.append('g')
+  private chart = this.svg.append('g')
       .attr('class', 'bars')
       .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
 
-    
-    // create scales
+  private test: number =0;
+
+  constructor() { 
+
     this.xScale = d3.scaleLinear().rangeRound([0, this.width]);
    
     this.yScale = d3.scaleLinear().rangeRound([this.height, 0]);
@@ -63,14 +43,37 @@ export class ChartviewComponent implements OnInit, OnChanges {
     this.yScale.domain(d3.extent(this.data, function(d){return d.capital;}));
     
     // x & y axis
-    this.xAxis = svg.append('g')
+    this.xAxis = this.svg.append('g')
       .attr('class', 'axis axis-x')
       .attr('transform', `translate(${this.margin.left}, ${this.margin.top + this.height})`)
       .call(d3.axisBottom(this.xScale));
-    this.yAxis = svg.append('g')
+    this.yAxis = this.svg.append('g')
       .attr('class', 'axis axis-y')
       .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`)
       .call(d3.axisLeft(this.yScale));
+    
+  }
+
+  ngOnInit() {
+    
+    
+  }
+  
+
+  ngOnChanges() {
+   
+    if (this.data) {
+      //this.createChart();
+      console.log(this.data);
+     // this.updateChart();
+      
+    }
+  }
+
+
+  createChart() {
+    
+    
 
   }
 
@@ -91,13 +94,14 @@ export class ChartviewComponent implements OnInit, OnChanges {
     update.exit().remove();
 
     // update existing bars
+  /*
     this.chart.selectAll('.bar').transition()
       .attr('x', d => this.xScale(d.year))
       .attr('y', d => this.yScale(d.capital))
       .attr('width', d => this.xScale.bandwidth())
       .attr('height', d => this.height - this.yScale(d.capital))
       .style('fill', 'black');
-
+*/
     // add new bars
     update
       .enter()
