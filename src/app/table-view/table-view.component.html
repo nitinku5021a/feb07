@@ -1,0 +1,22 @@
+<div class="table-responsive">
+    <table class="table table-bordered table-hover table-condensed">
+      <thead style="font-size: 14px">
+        <tr>
+          <th>Year</th>
+          <th>Capital</th>
+          <th>Expense</th>
+          <th>Interest Rate</th>
+          <th>Inflation</th>                  
+        </tr>
+      </thead>
+      <tbody style="font-size: 14px">
+        <tr *ngFor="let year of table">
+          <td align="center">{{year.year}}</td>
+          <td align="center">{{year.capital | currency : 'INR' : true : '1.2-2'}}</td>
+          <td align="center">{{year.expense| currency : 'INR' : true : '1.2-2'}}</td>
+          <td align="center">{{year.interest|percent}}</td>
+          <td align="center">{{year.inflation|percent}}</td>
+        </tr>
+      </tbody>
+    </table>
+</div>

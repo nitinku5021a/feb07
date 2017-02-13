@@ -1,0 +1,37 @@
+
+ <md-card>
+   <form class="form-inline">
+       <div class="col-md-3">                   
+            <md-input-container>
+                <input md-input type="number" min="0" step="1"  placeholder="Interest Rate (%)" name="int" (keyup)="onClick()" (click)="onClick()"
+                 [(ngModel)]="interest">
+            </md-input-container>                     
+            
+        </div>
+        <div class="col-md-3">
+          
+              <md-input-container>
+                <input md-input type="number" placeholder="Inflation (%)" (keyup)="onClick()" (click)="onClick()" name="inflation" [(ngModel)]="inflation">
+              </md-input-container>
+         
+          
+        </div>
+        <div class="col-md-3">
+          
+              <md-input-container>
+               <input md-input type="number" step="100000" placeholder="Capital (Rs)" (keyup)="onClick()" (click)="onClick()" name="capital" [(ngModel)]="capital"> 
+              </md-input-container>
+        
+          
+        </div>
+        <div class="col-md-3">
+          
+              <md-input-container>
+                <input md-input type="number" step="1000" placeholder="Expense (Rs/Year)" (keyup)="onClick()" (click)="onClick()" name="expense" [(ngModel)]="expense">
+              </md-input-container>
+          
+          
+        </div>       
+   </form>
+  
+</md-card>
